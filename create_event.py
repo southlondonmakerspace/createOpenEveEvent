@@ -49,7 +49,7 @@ def create_new_event():
 
     date_obj = find_datetime(content)
     event_date_str = date_obj.strftime("%Y-%m-%d") # 2025-01-22
-    event_title_str = date_obj.strftime("%a %w %B") # Wed 22 January
+    event_title_str = date_obj.strftime("%a %d %B") # Wed 22 January
     
     content.replace('"', '\\w') # make sure to escape the "
     data = {
