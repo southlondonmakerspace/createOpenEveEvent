@@ -1,6 +1,6 @@
 # createOpenEveEvent
 
-Helper script for the WELCOME team to create an event from a .md file
+Helper script for the WELCOME team to automatically create an event from a .md file.
 
 Script parses the date from openeve.md. Simply change the date and run the script. 
 

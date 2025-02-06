@@ -9,7 +9,7 @@ Well then come along to our:
 
 Come by the space and get a tour, see the tools, meet some Makers, and ask any questions you may have!
 
-**Date** : Wednesday, January 22nd, 2025
+**Date** : Wednesday, February 19th, 2025
 **Time** : 7pm - 9pm (drop in anytime, no reservation required)
 **Location** : South London Makerspace,
 Arch 1129, 41 Norwood Road,
