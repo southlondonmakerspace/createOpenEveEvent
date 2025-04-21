@@ -4,7 +4,8 @@
     2025-01-07"""
 
 import os
-from datetime import datetime
+from datetime import datetime, time
+from zoneinfo import ZoneInfo
 import re
 import requests
 from dotenv import load_dotenv
@@ -44,21 +45,33 @@ def create_new_event():
                }
 
     base_url = 'https://discourse.southlondonmakerspace.org'
-    
     content = load_content()
-
     date_obj = find_datetime(content)
+
+    if not date_obj:
+        print("ERROR: No valid date found, aborting.")
+        return
+
+    london = ZoneInfo("Europe/London")
+    utc = ZoneInfo("UTC")
+
+    def fmt(dt): # helper to format as UTC timestamp string
+        return dt.astimezone(utc).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+
+    event_start = datetime.combine(date_obj.date(), time(19, 0, tzinfo=london))
+    event_end = datetime.combine(date_obj.date(), time(21, 0, tzinfo=london))
+
     event_date_str = date_obj.strftime("%Y-%m-%d") # 2025-01-22
     event_title_str = date_obj.strftime("%a %d %B") # Wed 22 January
-    
+
     content.replace('"', '\\w') # make sure to escape the "
     data = {
         "title": f"Open Evening {event_title_str}, 7-9pm",
         "raw": content,
         "category": 101,  
         "tags[]": ["openevening"],
-        "event[start]": f"{event_date_str}T19:00:00.000Z",
-        "event[end]": f"{event_date_str}T21:00:00.000Z",
+        "event[start]": fmt(event_start),
+        "event[end]": fmt(event_end),
         "event[timezone]": "Europe/London",
         "event[all_day]": "false",
         "event[deadline]": "false",
@@ -68,8 +81,8 @@ def create_new_event():
     url = base_url + '/posts.json'
 
     print(data)
-    response = requests.post(url, headers=headers, data=data)
-    return response
+    return requests.post(url, headers=headers, data=data)
+    
 
 
 def main():
