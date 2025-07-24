@@ -32,7 +32,7 @@ def find_datetime(input_string):
         print("ERROR: Date not found")
         return
 
-    cleaned_date = re.sub(r"(st|nd|rd|th)", "", date_str)
+    cleaned_date = re.sub(r"(\d+)(st|nd|rd|th)", r"\1", date_str)
     date_obj = datetime.strptime(cleaned_date, "%B %d, %Y")
     
     return date_obj
