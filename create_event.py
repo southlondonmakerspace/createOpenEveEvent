@@ -82,11 +82,12 @@ def create_new_event():
 
     print(data)
     return requests.post(url, headers=headers, data=data)
-    
 
 
 def main():
     response = create_new_event()
+    if response is not None:
+        print(response.status_code, response.text)
     return response
 
 if __name__== '__main__':
